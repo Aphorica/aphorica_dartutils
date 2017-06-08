@@ -1,19 +1,21 @@
-/// A few utilities to help with dart and svg usages
+/// A few utilities to help with dart and svg dom usages.
 ///
 /// Suggest you import this namespaced:
 ///
-///   import 'package:dartutils/utilities.dart' as DartUtils;
+/// > import 'package:aphorica_dartutils/utilities.dart' as AphUtils;
 ///
 library dartutils;
 
 import 'dart:html';
+import 'package:d3/selection.dart' as d3;
 
-/// Follow the parent chain until either a parent with the parentClass
-/// is found or we run out.  Returns the found parent or null if not found
+/// Follow the parent Element chain until either a parent with
+/// the parentClass is found or we run out.  Returns the found
+/// parent or null if not found.
 ///
 /// Args:
-///   Element child -- the child class to start with.
-///   String parentClass -- the parent class to search for.
+///   child -- the child class to start with.
+///   parentClass -- the parent class to search for.
 ///
 /// Returns:
 ///   (if found) -- the parent Element found
@@ -31,7 +33,7 @@ Element getParentElementOfClass(Element child, String parentClass) {
 /// or mouse event.
 ///
 /// Args:
-///   Event evt -- the event from which to retrieve coords
+///   evt -- the event from which to retrieve coords
 ///
 Point getCoordsFromEvent(Event evt) {
   if (evt is MouseEvent) {
@@ -47,15 +49,19 @@ Point getCoordsFromEvent(Event evt) {
   return new Point(-1, -1);
 }
 
-/// get svg attribute setting from this node or from child
+/// Get svg attribute setting from this node or from child
 /// node if not set here.  Returns first node with this
 /// attribute set.  Mainly used for 'desc' in hover touches,
 /// but could be useful, so generalizing.
 ///
 /// Args:
-///   dynamic node -- the node to follow
-///   String attr -- the attribute to check on recursive
-///                  node traversal
+///   node -- the node to follow.
+///   NOTE 1: In d3, This is not the
+///           d3.Selection, but the [selection].js.node() member.
+///           Use searchAttrFromD3ParentNode (next)
+///   NOTE 2: the node can not be the top level svg node.
+/// 
+///   attr -- the attribute to check on recursive node traversal
 ///
 /// Returns:
 ///   (found) -- the attribute value found
@@ -74,4 +80,10 @@ String searchAttrFromParentNode(dynamic node, String attr)
     }
       
     return ''; 
+}
+
+/// Same as above, but takes a (single) d3 selection.
+/// 
+String searchAttrFromD3ParentSelection(d3.Selection sel, String attr) {
+  return searchAttrFromParentNode(sel.js.node(), attr);
 }

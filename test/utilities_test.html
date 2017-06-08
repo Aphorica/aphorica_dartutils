@@ -1,0 +1,24 @@
+<html>
+  <head>
+    <link rel="x-dart-test" href="utilities_test.dart">
+    <script src="packages/test/dart.js"></script>
+    <title>Aporica Utilities Test</title>
+    <style>
+      body {margin:0; padding:50px; width:100%; height:100%; }
+      .top-level { padding:20px; background:green;
+                  width:400px; text-align:center}
+      .middle-level { padding:50px; background: red; }
+      .bottom-level { padding:50px; background: yellow; }
+    </style>
+  </head>
+  <body>
+    <div class='top-level' id='top-level'>
+      <p>top-level div</p>
+      <div class='middle-level'>
+        <div class='bottom-level'>bottom-level Div</div>
+      </div>
+    </div>
+    <script src="packages/d3/d3.min.js" charset="utf-8"></script>
+    <script src="packages/browser/dart.js"></script>
+  </body>
+</html>
