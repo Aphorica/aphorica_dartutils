@@ -49,6 +49,29 @@ Point getCoordsFromEvent(Event evt) {
   return new Point(-1, -1);
 }
 
+/// Freeze the body at it's current location - prevent it
+/// from scrolling
+///  
+/// returns: the current YPos of the body.  Use in the unlock
+/// to retain the body position on unlock.  
+int _currYPos;
+void lockBody() {
+  _currYPos = window.scrollY;
+  Element body = querySelector('body');
+  body.style.position = 'fixed';
+  body.style.overflowY = 'hidden';
+  body.style.top = '${-_currYPos}px';
+}
+
+/// Un-freeze the body, allowing scrolling to resume 
+/// 
+void unlockBody() {
+  Element body = querySelector('body');
+  body.style.position = 'initial';
+  body.style.overflowY = 'scroll';
+  window.scrollTo(0, _currYPos);
+}
+
 /// Get svg attribute setting from this node or from child
 /// node if not set here.  Returns first node with this
 /// attribute set.  Mainly used for 'desc' in hover touches,
